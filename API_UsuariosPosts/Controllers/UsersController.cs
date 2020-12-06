@@ -2,10 +2,6 @@
 using CDataAccess.Interface;
 using CModels.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace API_UsuariosPosts.Controllers
 {
@@ -21,10 +17,6 @@ namespace API_UsuariosPosts.Controllers
             response = new Response();
             user_ = daUser;
         }
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
 
         [HttpPost]
         [Route("createUser")]

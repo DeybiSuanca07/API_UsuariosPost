@@ -1,19 +1,14 @@
 ﻿using API_UsuariosPosts.Models;
 using CDataAccess.Interface;
 using CModels.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace API_UsuariosPosts.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
     public class LoginController : Controller
     {
         private readonly IConfiguration config_;
