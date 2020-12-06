@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CModels.Context;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,12 @@ namespace API_UsuariosPosts.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly UsersContext usersContext_;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, UsersContext usersContext)
         {
             _logger = logger;
+            usersContext_ = usersContext;
         }
 
         [HttpGet]
