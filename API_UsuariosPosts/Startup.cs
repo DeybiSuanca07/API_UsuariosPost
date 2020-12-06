@@ -4,19 +4,12 @@ using CModels.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace API_UsuariosPosts
 {
@@ -48,10 +41,13 @@ namespace API_UsuariosPosts
                     ValidateAudience = false
                 };
             });
+            services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+           
             services.AddTransient<IUser, DaUser>();
             services.AddTransient<ILogin, DaLogin>();
             services.AddDbContext<UsersContext>(options
                 => options.UseSqlServer(Configuration.GetConnectionString("DevelopLocal")));
+           
             services.AddControllers();
         }
 
@@ -62,14 +58,12 @@ namespace API_UsuariosPosts
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseCors();
 
             app.UseEndpoints(endpoints =>
             {
