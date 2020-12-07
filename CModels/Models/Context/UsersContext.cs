@@ -30,6 +30,7 @@ namespace CModels.Context
         }
 
         public virtual DbSet<UsersData> UsersData { get; set; }
+        public virtual DbSet<Posts> Posts { get; set; }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{

@@ -23,8 +23,8 @@ namespace CDataAccess.DataAccess
         {
             try
             {
-                var validation = usersContext_.UsersData.Select(i => i.Email == email).FirstOrDefault();
-                if (validation)
+                var validation = usersContext_.UsersData.Where(i => i.Email == email).FirstOrDefault();
+                if (validation != null)
                 {
                     return 1;
                 }
