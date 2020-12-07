@@ -1,6 +1,7 @@
 ﻿using API_UsuariosPosts.Models;
 using CDataAccess.Interface;
 using CModels.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -27,6 +28,7 @@ namespace API_UsuariosPosts.Controllers
 
         [HttpPost]
         [Route("login")]
+        [AllowAnonymous]
         public ActionResult<Response> Login(UsersData user)
         {
             try
@@ -39,20 +41,30 @@ namespace API_UsuariosPosts.Controllers
                         if (login_.Login(user))
                         {
                             response.Message = "Usuario correctamente validado";
+                            response.MessageId = 1;
                             response.Status = true;
                             response.Object = user;
                         }
                         else
                         {
-                            response.Message = "Usuario y/o contraseña incorrectos";
+                            response.Message = "Nombre de usuario, email y/o contraseña incorrectos";
+                            response.MessageId = 2;
                             response.Status = false;
                             response.Object = user;
                         }
+                    }
+                    else if (result == 2)
+                    {
+                        response.Message = "El usuario no existe";
+                        response.MessageId = 3;
+                        response.Status = false;
+                        response.Object = null;
                     }
                 }
                 else
                 {
                     response.Message = "No se encontraron datos";
+                    response.MessageId = 0;
                     response.Status = false;
                     response.Object = null;
                 }

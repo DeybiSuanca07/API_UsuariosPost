@@ -12,8 +12,11 @@ GO
 CREATE TABLE Posts(
 	Title VARCHAR(200),
 	Content VARCHAR(MAX),
-	CreationDate DATETIME,
+	CreationDate DATETIME DEFAULT GETDATE(),
+	UserId INT,
 	Img VARCHAR(MAX),
 	IdPost INT PRIMARY KEY IDENTITY(1,1)
 )
 GO
+
+drop table Posts

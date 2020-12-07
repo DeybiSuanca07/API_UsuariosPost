@@ -1,3 +1,5 @@
+using Amazon;
+using Amazon.S3;
 using CDataAccess.DataAccess;
 using CDataAccess.Interface;
 using CModels.Context;
@@ -36,18 +38,23 @@ namespace API_UsuariosPosts
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(keyJWT),
-                    ValidateAudience = false
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true
                 };
             });
             services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
-           
+            //RegionEndpoint bucketRegion = RegionEndpoint.USEast1;
+            var options = Configuration.GetAWSOptions("AWS");
+            IAmazonS3 client = options.CreateServiceClient<IAmazonS3>();
+            services.AddDefaultAWSOptions(Configuration.GetAWSOptions("AWS"));
+            services.AddAWSService<IAmazonS3>();
             services.AddTransient<IUser, DaUser>();
+            services.AddTransient<IPost, DaPost>();
             services.AddTransient<ILogin, DaLogin>();
             services.AddDbContext<UsersContext>(options
                 => options.UseSqlServer(Configuration.GetConnectionString("DevelopLocal")));
-           
             services.AddControllers();
         }
 
@@ -58,7 +65,7 @@ namespace API_UsuariosPosts
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();

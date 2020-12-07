@@ -16,6 +16,7 @@ namespace CDataAccess.DataAccess
         private UsersContext usersContext_;
         private readonly IUser user_;
         private readonly IConfiguration config_;
+        private AuthenticatedUser authenticatedUser { get; set; }
 
         public DaLogin(UsersContext usersContext, IUser user, IConfiguration config)
         {
@@ -35,6 +36,7 @@ namespace CDataAccess.DataAccess
                     var secretKey = config_.GetValue<string>("SecretKey");
                     var keyJWT = Encoding.ASCII.GetBytes(secretKey);
 
+                    user.IdUserData = response.IdUserData;
                     var claims = new ClaimsIdentity();
                     claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.IdUserData.ToString()));
                     claims.AddClaim(new Claim(ClaimTypes.Email, user.Email));
@@ -42,6 +44,7 @@ namespace CDataAccess.DataAccess
                     var tokenDecrypted = new SecurityTokenDescriptor
                     {
                         Subject = claims,
+                        NotBefore = DateTime.UtcNow,
                         Expires = DateTime.UtcNow.AddHours(1),
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(keyJWT), SecurityAlgorithms.HmacSha256Signature)
                     };
@@ -49,8 +52,16 @@ namespace CDataAccess.DataAccess
                     var tokenH = new JwtSecurityTokenHandler();
                     var createdToken = tokenH.CreateToken(tokenDecrypted);
                     string bearerToken = tokenH.WriteToken(createdToken);
-                    user.IdUserData = response.IdUserData;
                     user.Token = bearerToken;
+
+                    authenticatedUser = new AuthenticatedUser()
+                    {
+                        Username = response.Username,
+                        Email = response.Email,
+                        TokenJWT = bearerToken,
+                        IdUser = response.IdUserData
+                    };
+
                     return true;
                 }
                 else
