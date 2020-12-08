@@ -16,7 +16,6 @@ namespace CDataAccess.DataAccess
         private UsersContext usersContext_;
         private readonly IUser user_;
         private readonly IConfiguration config_;
-        private AuthenticatedUser authenticatedUser { get; set; }
 
         public DaLogin(UsersContext usersContext, IUser user, IConfiguration config)
         {
@@ -53,14 +52,6 @@ namespace CDataAccess.DataAccess
                     var createdToken = tokenH.CreateToken(tokenDecrypted);
                     string bearerToken = tokenH.WriteToken(createdToken);
                     user.Token = bearerToken;
-
-                    authenticatedUser = new AuthenticatedUser()
-                    {
-                        Username = response.Username,
-                        Email = response.Email,
-                        TokenJWT = bearerToken,
-                        IdUser = response.IdUserData
-                    };
 
                     return true;
                 }

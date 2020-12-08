@@ -45,10 +45,10 @@ namespace API_UsuariosPosts
                 };
             });
             services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
-            //RegionEndpoint bucketRegion = RegionEndpoint.USEast1;
+            RegionEndpoint bucketRegion = RegionEndpoint.USEast1;
             var options = Configuration.GetAWSOptions("AWS");
             IAmazonS3 client = options.CreateServiceClient<IAmazonS3>();
-            services.AddDefaultAWSOptions(Configuration.GetAWSOptions("AWS"));
+            //services.AddDefaultAWSOptions(Configuration.GetAWSOptions("AWS"));
             services.AddAWSService<IAmazonS3>();
             services.AddTransient<IUser, DaUser>();
             services.AddTransient<IPost, DaPost>();
