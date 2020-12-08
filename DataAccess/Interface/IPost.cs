@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CModels.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,6 @@ namespace CDataAccess.Interface
 {
     public interface IPost
     {
-        Task<bool> CreatePost(string title, string content, IFormFile img);
+        Task<bool> CreatePost(string title, string content, IFormFile img, int UserId);
     }
 }

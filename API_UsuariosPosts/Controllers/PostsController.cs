@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
+using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 
@@ -20,6 +21,7 @@ namespace API_UsuariosPosts.Controllers
     {
         private Response response;
         public IPost post_;
+        private List<Claim> lst;
         public PostsController(IPost daPost)
         {
             response = new Response();
@@ -39,7 +41,9 @@ namespace API_UsuariosPosts.Controllers
             string title = Request.Form["title"][0];
             string content = Request.Form["content"][0];
             IFormFile img = Request.Form.Files[0];
-            bool result = await post_.CreatePost(title, content, img);
+            lst = User.Claims.ToList();
+            int UserId = Convert.ToInt32(lst[0].Value);
+            bool result = await post_.CreatePost(title, content, img, UserId);
             if (result)
             {
                 response.Message = "Post creado correctamente";

@@ -33,7 +33,7 @@ namespace CDataAccess.DataAccess
             config_ = config;
         }
 
-        public async Task<bool> CreatePost(string title, string content, IFormFile img)
+        public async Task<bool> CreatePost(string title, string content, IFormFile img, int UserId)
         {
             try
             {
@@ -62,43 +62,24 @@ namespace CDataAccess.DataAccess
 
                     }
                 }
-
-                ClaimsPrincipal c = new ClaimsPrincipal();
-                var t = ClaimsPrincipal.Current.Claims;
                 Posts post = new Posts();
                 post.Title = title;
                 post.Content = content;
                 post.CreationDate = DateTime.Now;
-                post.UserId = 0;
+                post.UserId = UserId;
                 post.Img = routeImg;
 
-                //var options = new CredentialProfileOptions
-                //{
-                //    AccessKey = "AKIAJPA6IFXRLI2SHNTA",
-                //    SecretKey = "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"
-                //};
+                //string bucketName = config_.GetValue<string>("BucketS3");
 
-                //var profile = new CredentialProfile("basic_profile", options);
-                //profile.Region = RegionEndpoint.USEast1;
-                //var netSDKFile = new NetSDKCredentialsFile();
-                //netSDKFile.RegisterProfile(profile);
+                var putRequest = new PutObjectRequest()
+                {
+                    BucketName = config_.GetValue<string>("BucketS3"),
+                    Key = img.FileName,
+                    InputStream = img.OpenReadStream(),
+                    ContentType = img.ContentType
+                };
 
-                //var chain = new CredentialProfileStoreChain();
-                //AWSCredentials aWSCredentials;
-                //if (chain.TryGetAWSCredentials("basic_profile", out aWSCredentials))
-                //{
-                    var putRequest = new PutObjectRequest()
-                    {
-                        BucketName = "repoposts",
-                        Key = img.FileName,
-                        InputStream = img.OpenReadStream(),
-                        ContentType = img.ContentType
-                    };
-
-                    var result = await this.amazonS3.PutObjectAsync(putRequest);
-
-                //}
-
+                var result = await this.amazonS3.PutObjectAsync(putRequest);
 
                 usersContext_.Posts.Add(post);
                 int response = usersContext_.SaveChanges();
