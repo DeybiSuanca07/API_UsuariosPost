@@ -20,5 +20,3 @@ CREATE TABLE Posts(
 	IdPost INT PRIMARY KEY IDENTITY(1,1)
 )
 GO
-
-drop table Posts
