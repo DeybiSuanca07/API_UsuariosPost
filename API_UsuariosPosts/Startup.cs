@@ -48,7 +48,6 @@ namespace API_UsuariosPosts
             RegionEndpoint bucketRegion = RegionEndpoint.USEast1;
             var options = Configuration.GetAWSOptions("AWS");
             IAmazonS3 client = options.CreateServiceClient<IAmazonS3>();
-            //services.AddDefaultAWSOptions(Configuration.GetAWSOptions("AWS"));
             services.AddAWSService<IAmazonS3>();
             services.AddTransient<IUser, DaUser>();
             services.AddTransient<IPost, DaPost>();
