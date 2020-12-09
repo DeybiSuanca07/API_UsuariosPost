@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace API_UsuariosPosts.Controllers
 {
+
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class UsersController : Controller
