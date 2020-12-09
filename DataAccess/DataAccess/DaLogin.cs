@@ -27,7 +27,6 @@ namespace CDataAccess.DataAccess
         {
             try
             {
-
                 string encryptedPassword = DaUser.Encrypt(user.Password);
                 var response = usersContext_.UsersData.Where(i => i.Email == user.Email && i.Password == encryptedPassword && i.Username == user.Username).FirstOrDefault();
                 if (response != null)
@@ -62,7 +61,6 @@ namespace CDataAccess.DataAccess
             }
             catch (Exception ex)
             {
-
                 return false;
             }
 

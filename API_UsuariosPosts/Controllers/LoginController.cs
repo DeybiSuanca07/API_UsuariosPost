@@ -8,7 +8,7 @@ using System;
 
 namespace API_UsuariosPosts.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class LoginController : Controller
     {
@@ -27,7 +27,6 @@ namespace API_UsuariosPosts.Controllers
         }
 
         [HttpPost]
-        [Route("login")]
         [AllowAnonymous]
         public ActionResult<Response> Login(UsersData user)
         {
@@ -68,12 +67,14 @@ namespace API_UsuariosPosts.Controllers
                     response.Status = false;
                     response.Object = null;
                 }
-                return response;
             }
             catch (Exception ex)
             {
-                return null;
+                response.Message = ex.Message;
+                response.Status = false;
+                response.Object = null;
             }
+            return response;
         }
     }
 }

@@ -12,6 +12,8 @@ namespace CModels.Models
         public DateTime CreationDate { get; set; }
         public int UserId { get; set; }
         public string Img { get; set; }
+        public string ExtImg { get; set; }
+        public string BytesImg { get; set; }
         [Key]
         public int IdPost { get; set; }
 

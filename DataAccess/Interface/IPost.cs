@@ -9,6 +9,8 @@ namespace CDataAccess.Interface
 {
     public interface IPost
     {
+        Task<List<Posts>> GetPosts(int UserId,int pagInicial = 0, int pagFinal = 0);
         Task<bool> CreatePost(string title, string content, IFormFile img, int UserId);
+        Task<bool> DeletePost(int UserId);
     }
 }
