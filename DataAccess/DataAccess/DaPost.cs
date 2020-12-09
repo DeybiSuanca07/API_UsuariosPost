@@ -35,87 +35,191 @@ namespace CDataAccess.DataAccess
             config_ = config;
         }
 
-        public async Task<List<Posts>> GetPosts(int UserId, int pagInicial = 0, int pagFinal = 0)
+
+        public int GetPostsCount(int UserId)
         {
             try
             {
+                var result = usersContext_.Posts.Where(i => i.UserId == UserId).Count();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        public async Task<List<Posts>> GetPosts(int UserId, int pagInicial = 0, string title = "", string content = "")
+        {
+            try
+            {
+                
                 var result = usersContext_.Posts.Where(i => i.UserId == UserId).ToList();
-                if (pagInicial == 0)
+                if (title == "" && content != "")
                 {
-                    result = result.Take(10).ToList();
+                    if (pagInicial == 0)
+                    {
+                        result = result.Take(10).Where(t => t.Content.Contains(content)).ToList();
+                    }
+                    else if (pagInicial == 10)
+                    {
+                        result = result.Skip(10).Take(10).Where(t => t.Content.Contains(content)).ToList();
+                    }
+                    else if (pagInicial == 20)
+                    {
+                        result = result.Skip(20).Take(10).Where(t => t.Content.Contains(content)).ToList();
+                    }
+                    else if (pagInicial == 30)
+                    {
+                        result = result.Skip(30).Take(10).Where(t => t.Content.Contains(content)).ToList();
+                    }
+                    else if (pagInicial == 40)
+                    {
+                        result = result.Skip(40).Take(10).Where(t => t.Content.Contains(content)).ToList();
+                    }
+                    else if (pagInicial == 50)
+                    {
+                        result = result.Skip(50).Take(10).Where(t => t.Content.Contains(content)).ToList();
+                    }
+                    else if (pagInicial == 60)
+                    {
+                        result = result.Skip(60).Take(10).Where(t => t.Content.Contains(content)).ToList();
+                    }
+                    else if (pagInicial == 70)
+                    {
+                        result = result.Skip(70).Take(10).Where(t => t.Content.Contains(content)).ToList();
+                    }
+                    else if (pagInicial == 80)
+                    {
+                        result = result.Skip(80).Take(10).Where(t => t.Content.Contains(content)).ToList();
+                    }
+                    else if (pagInicial == 90)
+                    {
+                        result = result.Skip(100).Take(10).Where(t => t.Content.Contains(content)).ToList();
+                    }
                 }
-                else if (pagInicial == 10)
+                else if (title != "" && content == "")
                 {
-                    result = result.Skip(10).Take(10).ToList();
+                    if (pagInicial == 0)
+                    {
+                        result = result.Take(10).Where(t => t.Title.Contains(title)).ToList();
+                    }
+                    else if (pagInicial == 10)
+                    {
+                        result = result.Skip(10).Take(10).Where(t => t.Title.Contains(title) || t.Content.Contains(content)).ToList();
+                    }
+                    else if (pagInicial == 20)
+                    {
+                        result = result.Skip(20).Take(10).Where(t => t.Title.Contains(title) || t.Content.Contains(content)).ToList();
+                    }
+                    else if (pagInicial == 30)
+                    {
+                        result = result.Skip(30).Take(10).Where(t => t.Title.Contains(title) || t.Content.Contains(content)).ToList();
+                    }
+                    else if (pagInicial == 40)
+                    {
+                        result = result.Skip(40).Take(10).Where(t => t.Title.Contains(title) || t.Content.Contains(content)).ToList();
+                    }
+                    else if (pagInicial == 50)
+                    {
+                        result = result.Skip(50).Take(10).Where(t => t.Title.Contains(title) || t.Content.Contains(content)).ToList();
+                    }
+                    else if (pagInicial == 60)
+                    {
+                        result = result.Skip(60).Take(10).Where(t => t.Title.Contains(title) || t.Content.Contains(content)).ToList();
+                    }
+                    else if (pagInicial == 70)
+                    {
+                        result = result.Skip(70).Take(10).Where(t => t.Title.Contains(title) || t.Content.Contains(content)).ToList();
+                    }
+                    else if (pagInicial == 80)
+                    {
+                        result = result.Skip(80).Take(10).Where(t => t.Title.Contains(title) || t.Content.Contains(content)).ToList();
+                    }
+                    else if (pagInicial == 90)
+                    {
+                        result = result.Skip(100).Take(10).Where(t => t.Title.Contains(title) || t.Content.Contains(content)).ToList();
+                    }
                 }
-                else if (pagInicial == 20)
+                else if (title == "" && content == "")
                 {
-                    result = result.Skip(20).Take(10).ToList();
-                }
-                else if (pagInicial == 30)
-                {
-                    result = result.Skip(30).Take(10).ToList();
-                }
-                else if (pagInicial == 40)
-                {
-                    result = result.Skip(40).Take(10).ToList();
-                }
-                else if (pagInicial == 50)
-                {
-                    result = result.Skip(50).Take(10).ToList();
-                }
-                else if (pagInicial == 60)
-                {
-                    result = result.Skip(60).Take(10).ToList();
-                }
-                else if (pagInicial == 70)
-                {
-                    result = result.Skip(70).Take(10).ToList();
-                }
-                else if (pagInicial == 80)
-                {
-                    result = result.Skip(80).Take(10).ToList();
-                }
-                else if (pagInicial == 90)
-                {
-                    result = result.Skip(100).Take(10).ToList();
+                    if (pagInicial == 0)
+                    {
+                        result = result.Take(10).ToList();
+                    }
+                    else if (pagInicial == 10)
+                    {
+                        result = result.Skip(10).Take(10).ToList();
+                    }
+                    else if (pagInicial == 20)
+                    {
+                        result = result.Skip(20).Take(10).ToList();
+                    }
+                    else if (pagInicial == 30)
+                    {
+                        result = result.Skip(30).Take(10).ToList();
+                    }
+                    else if (pagInicial == 40)
+                    {
+                        result = result.Skip(40).Take(10).ToList();
+                    }
+                    else if (pagInicial == 50)
+                    {
+                        result = result.Skip(50).Take(10).ToList();
+                    }
+                    else if (pagInicial == 60)
+                    {
+                        result = result.Skip(60).Take(10).ToList();
+                    }
+                    else if (pagInicial == 70)
+                    {
+                        result = result.Skip(70).Take(10).ToList();
+                    }
+                    else if (pagInicial == 80)
+                    {
+                        result = result.Skip(80).Take(10).ToList();
+                    }
+                    else if (pagInicial == 90)
+                    {
+                        result = result.Skip(100).Take(10).ToList();
+                    }
                 }
 
                 if (result.Count > 0)
                 {
-                    string bucketName = "bucketuserid" + UserId;
-                    var credentials = new BasicAWSCredentials(config_.GetValue<string>("AccessKeyId"), config_.GetValue<string>("SecretKeyId"));
-                    using (client_ = new AmazonS3Client(credentials, RegionEndpoint.USEast1))
+                    //string bucketName = "bucketuserid" + UserId;
+                    //var credentials = new BasicAWSCredentials(config_.GetValue<string>("AccessKeyId"), config_.GetValue<string>("SecretKeyId"));
+                    //using (client_ = new AmazonS3Client(credentials, RegionEndpoint.USEast1))
+                    //{
+                    //ListObjectsRequest req = new ListObjectsRequest();
+                    //req.BucketName = bucketName;
+                    //ListObjectsResponse res = await client_.ListObjectsAsync(req);
+                    string folderUser = Path.Combine("temp", UserId.ToString());
+                    List<string> files = Directory.GetFiles(folderUser, "*").ToList();
+                    foreach (string file in files)
                     {
-                        ListObjectsRequest req = new ListObjectsRequest();
-                        req.BucketName = bucketName;
-                        ListObjectsResponse res = await client_.ListObjectsAsync(req);
-                        string folderUser = Path.Combine("temp", UserId.ToString());
-                        List<string> files = Directory.GetFiles(folderUser, "*").ToList();
-                        foreach (string file in files)
-                        {
-                            File.Delete(file);
-                        }
-                        foreach (S3Object s3Object in res.S3Objects)
-                        {
-                            var request = new GetObjectRequest()
-                            {
-                                BucketName = bucketName,
-                                Key = s3Object.Key
-                            };
-                            using (GetObjectResponse response = await client_.GetObjectAsync(request))
-                            {
-                                using (Stream responseStream = response.ResponseStream)
-                                {
-                                    var routeImg = Path.Combine("temp", UserId.ToString(), s3Object.Key);
-                                    using (var stream = new FileStream(routeImg, FileMode.Create, FileAccess.ReadWrite))
-                                    {
-                                        await responseStream.CopyToAsync(stream);
-                                    }
-                                }
-                            }
-                        }
+                        File.Delete(file);
                     }
+                    //    foreach (S3Object s3Object in res.S3Objects)
+                    //    {
+                    //        var request = new GetObjectRequest()
+                    //        {
+                    //            BucketName = bucketName,
+                    //            Key = s3Object.Key
+                    //        };
+                    //        using (GetObjectResponse response = await client_.GetObjectAsync(request))
+                    //        {
+                    //            using (Stream responseStream = response.ResponseStream)
+                    //            {
+                    //                var routeImg = Path.Combine("temp", UserId.ToString(), s3Object.Key);
+                    //                using (var stream = new FileStream(routeImg, FileMode.Create, FileAccess.ReadWrite))
+                    //                {
+                    //                    await responseStream.CopyToAsync(stream);
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+                    //}
                     return result;
                 }
                 else

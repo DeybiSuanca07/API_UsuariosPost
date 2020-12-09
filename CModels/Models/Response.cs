@@ -9,6 +9,8 @@ namespace API_UsuariosPosts.Models
     {
         public string Message { get; set; }
         public int MessageId { get; set; }
+        public int Count { get; set; }
+        public int CountPage { get; set; }
         public bool Status { get; set; }
         public object Object { get; set; }
     }
