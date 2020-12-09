@@ -187,39 +187,12 @@ namespace CDataAccess.DataAccess
 
                 if (result.Count > 0)
                 {
-                    //string bucketName = "bucketuserid" + UserId;
-                    //var credentials = new BasicAWSCredentials(config_.GetValue<string>("AccessKeyId"), config_.GetValue<string>("SecretKeyId"));
-                    //using (client_ = new AmazonS3Client(credentials, RegionEndpoint.USEast1))
-                    //{
-                    //ListObjectsRequest req = new ListObjectsRequest();
-                    //req.BucketName = bucketName;
-                    //ListObjectsResponse res = await client_.ListObjectsAsync(req);
                     string folderUser = Path.Combine("temp", UserId.ToString());
                     List<string> files = Directory.GetFiles(folderUser, "*").ToList();
                     foreach (string file in files)
                     {
                         File.Delete(file);
                     }
-                    //    foreach (S3Object s3Object in res.S3Objects)
-                    //    {
-                    //        var request = new GetObjectRequest()
-                    //        {
-                    //            BucketName = bucketName,
-                    //            Key = s3Object.Key
-                    //        };
-                    //        using (GetObjectResponse response = await client_.GetObjectAsync(request))
-                    //        {
-                    //            using (Stream responseStream = response.ResponseStream)
-                    //            {
-                    //                var routeImg = Path.Combine("temp", UserId.ToString(), s3Object.Key);
-                    //                using (var stream = new FileStream(routeImg, FileMode.Create, FileAccess.ReadWrite))
-                    //                {
-                    //                    await responseStream.CopyToAsync(stream);
-                    //                }
-                    //            }
-                    //        }
-                    //    }
-                    //}
                     return result;
                 }
                 else
