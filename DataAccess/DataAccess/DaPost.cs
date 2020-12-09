@@ -35,7 +35,6 @@ namespace CDataAccess.DataAccess
             config_ = config;
         }
 
-
         public int GetPostsCount(int UserId)
         {
             try
